@@ -18,4 +18,6 @@
 
 - (instancetype)mn_dateWithDay:(NSUInteger)day calendar:(NSCalendar *)calendar;
 
++ (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
+
 @end
