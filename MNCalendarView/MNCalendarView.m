@@ -39,7 +39,7 @@
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        self.headerTitleColor = [UIColor blueColor];
+        
         self.calendar   = NSCalendar.currentCalendar;
         self.fromDate   = [NSDate.date mn_beginningOfDay:self.calendar];
         self.toDate     = [self.fromDate dateByAddingTimeInterval:MN_YEAR * 4];
@@ -53,14 +53,15 @@
         
         [self addSubview:self.collectionView];
         [self applyConstraints];
-        [self reloadData];
+        self.headerTitleColor = [UIColor blueColor];
+        
     }
     return self;
 }
 
 -(void)setHeaderTitleColor:(UIColor *)headerTitleColor{
     _headerTitleColor = headerTitleColor;
-    [self.collectionView reloadData];
+    [self reloadData];
 }
 
 - (UICollectionView *)collectionView {
