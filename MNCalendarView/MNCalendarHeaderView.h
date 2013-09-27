@@ -14,5 +14,5 @@ extern NSString *const MNCalendarHeaderViewIdentifier;
 
 @property(nonatomic,strong,readonly) UILabel *titleLabel;
 @property(nonatomic,strong) NSDate *date;
-
+@property(nonatomic, strong) UIColor *titleColor;
 @end

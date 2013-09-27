@@ -39,6 +39,7 @@
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        self.headerTitleColor = [UIColor blueColor];
         self.calendar   = NSCalendar.currentCalendar;
         self.fromDate   = [NSDate.date mn_beginningOfDay:self.calendar];
         self.toDate     = [self.fromDate dateByAddingTimeInterval:MN_YEAR * 4];
@@ -57,6 +58,11 @@
     return self;
 }
 
+-(void)setHeaderTitleColor:(UIColor *)headerTitleColor{
+    _headerTitleColor = headerTitleColor;
+    [self.collectionView reloadData];
+}
+
 - (UICollectionView *)collectionView {
     if (nil == _collectionView) {
         MNCalendarViewLayout *layout = [[MNCalendarViewLayout alloc] init];
@@ -71,6 +77,7 @@
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
         //      [(UICollectionViewFlowLayout *)_collectionView.collectionViewLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+        [self.collectionView setPagingEnabled:YES];
         
         [_collectionView registerClass:self.dayCellClass
             forCellWithReuseIdentifier:MNCalendarViewDayCellIdentifier];
@@ -199,7 +206,7 @@
     [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                        withReuseIdentifier:MNCalendarHeaderViewIdentifier
                                               forIndexPath:indexPath];
-    
+    [headerView setTitleColor:self.headerTitleColor];
     headerView.backgroundColor = self.collectionView.backgroundColor;
     headerView.titleLabel.text = [self.monthFormatter stringFromDate:self.monthDates[indexPath.section]];
     
@@ -229,6 +236,7 @@
         cell.backgroundColor = self.collectionView.backgroundColor;
         cell.titleLabel.text = self.weekdaySymbols[indexPath.item];
         cell.separatorColor = self.separatorColor;
+        cell.titleLabel.textColor = self.headerTitleColor;
         return cell;
     }
     MNCalendarViewDayCell *cell =

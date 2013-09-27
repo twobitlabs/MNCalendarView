@@ -27,6 +27,7 @@
 @property(nonatomic,copy)   NSDate     *toDate;
 @property(nonatomic,copy)   NSDate     *selectedDate;
 @property(nonatomic, copy) NSArray *selectedDateRange;
+@property(nonatomic, strong) UIColor *headerTitleColor;
 
 @property(nonatomic,strong) UIColor *separatorColor UI_APPEARANCE_SELECTOR; // default is the standard separator gray
 

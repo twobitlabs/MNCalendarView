@@ -31,6 +31,11 @@ NSString *const MNCalendarHeaderViewIdentifier = @"MNCalendarHeaderViewIdentifie
   return self;
 }
 
+-(void)setTitleColor:(UIColor *)titleColor{
+    _titleColor = titleColor;
+    [self.titleLabel setTextColor:titleColor];
+}
+
 - (void)setDate:(NSDate *)date {
   _date = date;
 
