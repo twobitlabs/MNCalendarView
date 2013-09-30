@@ -1,75 +1,75 @@
 //
-//  MNCalendarViewCell.m
+//  MNCalendarViewDayCell.m
 //  MNCalendarView
 //
-//  Created by Min Kim on 7/26/13.
+//  Created by Min Kim on 7/28/13.
 //  Copyright (c) 2013 min. All rights reserved.
 //
 
-#import "MNCalendarViewCell.h"
+#import "MNCalendarViewDayCell.h"
 
-void MNContextDrawLine(CGContextRef c, CGPoint start, CGPoint end, CGColorRef color, CGFloat lineWidth) {
-    CGContextSetAllowsAntialiasing(c, false);
-    CGContextSetStrokeColorWithColor(c, color);
-    CGContextSetLineWidth(c, lineWidth);
-    CGContextMoveToPoint(c, start.x, start.y - (lineWidth/2.f));
-    CGContextAddLineToPoint(c, end.x, end.y - (lineWidth/2.f));
-    CGContextStrokePath(c);
-    CGContextSetAllowsAntialiasing(c, true);
-}
+NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentifier";
 
-NSString *const MNCalendarViewCellIdentifier = @"MNCalendarViewCellIdentifier";
+@interface MNCalendarViewDayCell()
 
-@interface MNCalendarViewCell()
-
-@property(nonatomic,strong,readwrite) UILabel *titleLabel;
+@property(nonatomic,strong,readwrite) NSDate *date;
+@property(nonatomic,strong,readwrite) NSDate *month;
+@property(nonatomic,assign,readwrite) NSUInteger weekday;
 
 @end
 
-@implementation MNCalendarViewCell
+@implementation MNCalendarViewDayCell
 
-- (id)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = UIColor.whiteColor;
-        self.contentView.backgroundColor = UIColor.clearColor;
-        
-        self.titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
-        self.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        self.titleLabel.font = [UIFont systemFontOfSize:14.f];
-        self.titleLabel.textColor = [UIColor darkTextColor];
-        self.titleLabel.highlightedTextColor = [UIColor whiteColor];
-        self.titleLabel.textAlignment = NSTextAlignmentCenter;
-        self.titleLabel.userInteractionEnabled = NO;
-        self.titleLabel.backgroundColor = [UIColor clearColor];
-        
-        [self.contentView addSubview:self.titleLabel];
-        
-        self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
-        [self.selectedBackgroundView setClipsToBounds:YES];
-        self.selectedBackgroundView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        self.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:0.23f green:0.61f blue:1.f alpha:1.f];
-    }
-    return self;
+- (void)setDate:(NSDate *)date
+          month:(NSDate *)month
+       calendar:(NSCalendar *)calendar {
+  
+  self.date     = date;
+  self.month    = month;
+  self.calendar = calendar;
+  
+  NSDateComponents *components =
+  [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit
+                   fromDate:self.date];
+  
+  NSDateComponents *monthComponents =
+  [self.calendar components:NSMonthCalendarUnit
+                   fromDate:self.month];
+  
+  self.weekday = components.weekday;
+  self.titleLabel.text = [NSString stringWithFormat:@"%d", components.day];
+  self.enabled = monthComponents.month == components.month;
+  
+  [self setNeedsDisplay];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    self.contentView.frame = self.bounds;
-    self.selectedBackgroundView.frame = self.bounds;
+- (void)setEnabled:(BOOL)enabled {
+  [super setEnabled:enabled];
+  
+  self.titleLabel.textColor =
+  self.enabled ? UIColor.darkTextColor : UIColor.lightGrayColor;
+  
+  self.backgroundColor =
+  self.enabled ? UIColor.whiteColor : [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
 }
 
 - (void)drawRect:(CGRect)rect {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGColorRef separatorColor = self.separatorColor.CGColor;
-    
+  [super drawRect:rect];
+  
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  
+  CGColorRef separatorColor = self.separatorColor.CGColor;
+  
+  CGSize size = self.bounds.size;
+  
+  if (self.weekday != 7) {
     CGFloat pixel = 1.f / [UIScreen mainScreen].scale;
     MNContextDrawLine(context,
-                      CGPointMake(0.f, self.bounds.size.height),
-                      CGPointMake(self.bounds.size.width, self.bounds.size.height),
+                      CGPointMake(size.width - pixel, pixel),
+                      CGPointMake(size.width - pixel, size.height),
                       separatorColor,
                       pixel);
+  }
 }
 
 @end
