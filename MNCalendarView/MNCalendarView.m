@@ -53,7 +53,7 @@
         
         [self addSubview:self.collectionView];
         [self applyConstraints];
-        self.headerTitleColor = [UIColor blueColor];
+        self.headerTitleColor = [UIColor blackColor];
         
     }
     return self;
@@ -78,7 +78,7 @@
         _collectionView.dataSource = self;
         _collectionView.delegate = self;
         //      [(UICollectionViewFlowLayout *)_collectionView.collectionViewLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-        [self.collectionView setPagingEnabled:YES];
+        //        [self.collectionView setPagingEnabled:YES];
         
         [_collectionView registerClass:self.dayCellClass
             forCellWithReuseIdentifier:MNCalendarViewDayCellIdentifier];
@@ -91,6 +91,11 @@
                    withReuseIdentifier:MNCalendarHeaderViewIdentifier];
     }
     return _collectionView;
+}
+
+-(void)setPagingEnableSetting:(BOOL)pagingEnableSetting{
+    _pagingEnableSetting = pagingEnableSetting;
+    [(MNCalendarViewLayout *)self.collectionView.collectionViewLayout setPagingEnable:pagingEnableSetting];
 }
 
 - (void)setSeparatorColor:(UIColor *)separatorColor {
@@ -194,6 +199,26 @@
     return enabled;
 }
 
+-(void)scrollToDate:(NSDate *)date{
+    if ([date compare:_fromDate] == NSOrderedAscending || [date compare:_toDate] == NSOrderedDescending) {
+        return;
+    }
+    NSDateComponents *toDateComp = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:date];
+    NSDateComponents *initialDateComp = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:_fromDate];
+    
+    NSInteger yearDiff = [toDateComp year] - [initialDateComp year];
+    NSInteger monthDiff = fabs([toDateComp month] - [initialDateComp month]);
+    NSInteger dayDiff = [toDateComp day];
+    
+    [toDateComp setDay:1];
+    toDateComp = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit) fromDate:[self.calendar dateFromComponents:toDateComp]];
+    
+    NSInteger section = (yearDiff * 12) + monthDiff;
+    NSInteger row = [toDateComp weekday] - 1 + dayDiff;
+    
+    [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:row inSection:section] animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -265,7 +290,14 @@
         if (self.selectedDateRange.count < 2) {
             [cell setSelected:NO];
         }else{
+            [cell.selectedBackgroundView setBackgroundColor:_inRangeDateBackgroundColor];
             [cell setSelected:[NSDate date:date isBetweenDate:self.selectedDateRange[0] andDate:self.selectedDateRange[1]]];
+        }
+        
+        if ([date timeIntervalSinceDate:_selectedDateRange[0]] == 0) {
+            [cell.selectedBackgroundView setBackgroundColor:_beginDateBackgroundColor];
+        }else if ([date timeIntervalSinceDate:_selectedDateRange[1]] == 0){
+            [cell.selectedBackgroundView setBackgroundColor:_endateDateBackgroundColor];
         }
     }
     

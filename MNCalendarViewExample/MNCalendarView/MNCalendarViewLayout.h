@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MNCalendarViewLayout : UICollectionViewFlowLayout
-@property (nonatomic, assign) BOOL pagingEnable;
+
 @end

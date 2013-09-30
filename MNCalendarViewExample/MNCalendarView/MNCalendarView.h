@@ -16,7 +16,7 @@
 
 @protocol MNCalendarViewDelegate;
 
-@interface MNCalendarView : UIView
+@interface MNCalendarView : UIView <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property(nonatomic,strong,readonly) UICollectionView *collectionView;
 
@@ -26,22 +26,15 @@
 @property(nonatomic,copy)   NSDate     *fromDate;
 @property(nonatomic,copy)   NSDate     *toDate;
 @property(nonatomic,copy)   NSDate     *selectedDate;
-@property(nonatomic, copy) NSArray *selectedDateRange;
-@property(nonatomic, strong) UIColor *headerTitleColor;
 
 @property(nonatomic,strong) UIColor *separatorColor UI_APPEARANCE_SELECTOR; // default is the standard separator gray
-@property(nonatomic,strong) UIColor *beginDateBackgroundColor;
-@property(nonatomic,strong) UIColor *inRangeDateBackgroundColor;
-@property(nonatomic,strong) UIColor *endateDateBackgroundColor;
-@property(nonatomic,assign) BOOL pagingEnableSetting;
 
 @property(nonatomic,strong) Class headerViewClass;
 @property(nonatomic,strong) Class weekdayCellClass;
 @property(nonatomic,strong) Class dayCellClass;
 
--(void)scrollToDate:(NSDate *)date;
-
 - (void)reloadData;
+- (void)registerUICollectionViewClasses; 
 
 @end
 

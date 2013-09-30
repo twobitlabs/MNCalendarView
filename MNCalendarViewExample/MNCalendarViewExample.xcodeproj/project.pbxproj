@@ -24,6 +24,14 @@
 		39FCA69C17A6D99A0064F303 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39FCA69917A6D99A0064F303 /* Default-568h@2x.png */; };
 		39FCA69D17A6D99A0064F303 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 39FCA69A17A6D99A0064F303 /* Default.png */; };
 		39FCA69E17A6D99A0064F303 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39FCA69B17A6D99A0064F303 /* Default@2x.png */; };
+		D8C86DBE17FA1995000C7EC1 /* MNCalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C86DAE17FA1995000C7EC1 /* MNCalendarHeaderView.m */; };
+		D8C86DBF17FA1995000C7EC1 /* MNCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C86DB117FA1995000C7EC1 /* MNCalendarView.m */; };
+		D8C86DC017FA1995000C7EC1 /* MNCalendarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C86DB317FA1995000C7EC1 /* MNCalendarViewCell.m */; };
+		D8C86DC117FA1995000C7EC1 /* MNCalendarViewDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C86DB517FA1995000C7EC1 /* MNCalendarViewDayCell.m */; };
+		D8C86DC217FA1995000C7EC1 /* MNCalendarViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C86DB717FA1995000C7EC1 /* MNCalendarViewLayout.m */; };
+		D8C86DC317FA1995000C7EC1 /* MNCalendarViewWeekdayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C86DB917FA1995000C7EC1 /* MNCalendarViewWeekdayCell.m */; };
+		D8C86DC417FA1995000C7EC1 /* MNFastDateEnumeration.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C86DBB17FA1995000C7EC1 /* MNFastDateEnumeration.m */; };
+		D8C86DC517FA1995000C7EC1 /* NSDate+MNAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C86DBD17FA1995000C7EC1 /* NSDate+MNAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +81,23 @@
 		39FCA69917A6D99A0064F303 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		39FCA69A17A6D99A0064F303 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		39FCA69B17A6D99A0064F303 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		D8C86DAD17FA1995000C7EC1 /* MNCalendarHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNCalendarHeaderView.h; sourceTree = "<group>"; };
+		D8C86DAE17FA1995000C7EC1 /* MNCalendarHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNCalendarHeaderView.m; sourceTree = "<group>"; };
+		D8C86DAF17FA1995000C7EC1 /* MNCalendarView-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MNCalendarView-Prefix.pch"; sourceTree = "<group>"; };
+		D8C86DB017FA1995000C7EC1 /* MNCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNCalendarView.h; sourceTree = "<group>"; };
+		D8C86DB117FA1995000C7EC1 /* MNCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNCalendarView.m; sourceTree = "<group>"; };
+		D8C86DB217FA1995000C7EC1 /* MNCalendarViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNCalendarViewCell.h; sourceTree = "<group>"; };
+		D8C86DB317FA1995000C7EC1 /* MNCalendarViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNCalendarViewCell.m; sourceTree = "<group>"; };
+		D8C86DB417FA1995000C7EC1 /* MNCalendarViewDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNCalendarViewDayCell.h; sourceTree = "<group>"; };
+		D8C86DB517FA1995000C7EC1 /* MNCalendarViewDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNCalendarViewDayCell.m; sourceTree = "<group>"; };
+		D8C86DB617FA1995000C7EC1 /* MNCalendarViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNCalendarViewLayout.h; sourceTree = "<group>"; };
+		D8C86DB717FA1995000C7EC1 /* MNCalendarViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNCalendarViewLayout.m; sourceTree = "<group>"; };
+		D8C86DB817FA1995000C7EC1 /* MNCalendarViewWeekdayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNCalendarViewWeekdayCell.h; sourceTree = "<group>"; };
+		D8C86DB917FA1995000C7EC1 /* MNCalendarViewWeekdayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNCalendarViewWeekdayCell.m; sourceTree = "<group>"; };
+		D8C86DBA17FA1995000C7EC1 /* MNFastDateEnumeration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNFastDateEnumeration.h; sourceTree = "<group>"; };
+		D8C86DBB17FA1995000C7EC1 /* MNFastDateEnumeration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNFastDateEnumeration.m; sourceTree = "<group>"; };
+		D8C86DBC17FA1995000C7EC1 /* NSDate+MNAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+MNAdditions.h"; sourceTree = "<group>"; };
+		D8C86DBD17FA1995000C7EC1 /* NSDate+MNAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+MNAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				39A860CE17A2F022003F6F4A /* MNCalendarView.xcodeproj */,
+				D8C86DAC17FA1995000C7EC1 /* MNCalendarView */,
 				39A8609617A2EFE4003F6F4A /* Foundation.framework */,
 				39A8609817A2EFE4003F6F4A /* CoreGraphics.framework */,
 				39A8609A17A2EFE4003F6F4A /* UIKit.framework */,
@@ -183,6 +209,30 @@
 				39A860D617A2F022003F6F4A /* MNCalendarViewTests.octest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D8C86DAC17FA1995000C7EC1 /* MNCalendarView */ = {
+			isa = PBXGroup;
+			children = (
+				D8C86DAD17FA1995000C7EC1 /* MNCalendarHeaderView.h */,
+				D8C86DAE17FA1995000C7EC1 /* MNCalendarHeaderView.m */,
+				D8C86DAF17FA1995000C7EC1 /* MNCalendarView-Prefix.pch */,
+				D8C86DB017FA1995000C7EC1 /* MNCalendarView.h */,
+				D8C86DB117FA1995000C7EC1 /* MNCalendarView.m */,
+				D8C86DB217FA1995000C7EC1 /* MNCalendarViewCell.h */,
+				D8C86DB317FA1995000C7EC1 /* MNCalendarViewCell.m */,
+				D8C86DB417FA1995000C7EC1 /* MNCalendarViewDayCell.h */,
+				D8C86DB517FA1995000C7EC1 /* MNCalendarViewDayCell.m */,
+				D8C86DB617FA1995000C7EC1 /* MNCalendarViewLayout.h */,
+				D8C86DB717FA1995000C7EC1 /* MNCalendarViewLayout.m */,
+				D8C86DB817FA1995000C7EC1 /* MNCalendarViewWeekdayCell.h */,
+				D8C86DB917FA1995000C7EC1 /* MNCalendarViewWeekdayCell.m */,
+				D8C86DBA17FA1995000C7EC1 /* MNFastDateEnumeration.h */,
+				D8C86DBB17FA1995000C7EC1 /* MNFastDateEnumeration.m */,
+				D8C86DBC17FA1995000C7EC1 /* NSDate+MNAdditions.h */,
+				D8C86DBD17FA1995000C7EC1 /* NSDate+MNAdditions.m */,
+			);
+			path = MNCalendarView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,9 +358,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8C86DC417FA1995000C7EC1 /* MNFastDateEnumeration.m in Sources */,
 				39A860A317A2EFE4003F6F4A /* main.m in Sources */,
+				D8C86DC017FA1995000C7EC1 /* MNCalendarViewCell.m in Sources */,
+				D8C86DBF17FA1995000C7EC1 /* MNCalendarView.m in Sources */,
 				39A860B017A2EFE4003F6F4A /* MNViewController.m in Sources */,
+				D8C86DBE17FA1995000C7EC1 /* MNCalendarHeaderView.m in Sources */,
+				D8C86DC517FA1995000C7EC1 /* NSDate+MNAdditions.m in Sources */,
 				39A860A717A2EFE4003F6F4A /* MNAppDelegate.m in Sources */,
+				D8C86DC317FA1995000C7EC1 /* MNCalendarViewWeekdayCell.m in Sources */,
+				D8C86DC117FA1995000C7EC1 /* MNCalendarViewDayCell.m in Sources */,
+				D8C86DC217FA1995000C7EC1 /* MNCalendarViewLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
