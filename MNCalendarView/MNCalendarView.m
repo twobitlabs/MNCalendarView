@@ -54,6 +54,7 @@
         [self addSubview:self.collectionView];
         [self applyConstraints];
         self.headerTitleColor = [UIColor blackColor];
+        self.tapEnabled = YES;
         
     }
     return self;
@@ -318,6 +319,9 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (!_tapEnabled) {
+        return;
+    }
     MNCalendarViewCell *cell = (MNCalendarViewCell *)[self collectionView:collectionView cellForItemAtIndexPath:indexPath];
     
     if ([cell isKindOfClass:MNCalendarViewDayCell.class] && cell.enabled) {
