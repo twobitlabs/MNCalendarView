@@ -286,6 +286,7 @@
          calendar:self.calendar];
     [cell setEnabled:[self dateEnabled:date]];
     
+    
     if (self.selectedDate && cell.enabled) {
         if (self.selectedDateRange.count < 2) {
             [cell setSelected:NO];
@@ -300,6 +301,8 @@
             [cell.selectedBackgroundView setBackgroundColor:_endateDateBackgroundColor];
         }
     }
+    
+    [cell hideIfOtherMonthDate];
     
     return cell;
 }

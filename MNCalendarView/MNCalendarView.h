@@ -34,6 +34,7 @@
 @property(nonatomic,strong) UIColor *inRangeDateBackgroundColor;
 @property(nonatomic,strong) UIColor *endateDateBackgroundColor;
 @property(nonatomic,assign) BOOL pagingEnableSetting;
+@property(nonatomic,assign) BOOL addsFutureDates;
 
 @property(nonatomic,strong) Class headerViewClass;
 @property(nonatomic,strong) Class weekdayCellClass;
