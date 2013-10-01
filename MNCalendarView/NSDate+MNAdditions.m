@@ -60,10 +60,15 @@
     NSComparisonResult beginDateComparison =[date compare:beginDate];
     NSComparisonResult endDateComparison =[date compare:endDate];
     
-    if (beginDateComparison == NSOrderedAscending || beginDateComparison == NSOrderedSame)
+    if (beginDateComparison == NSOrderedSame)
+        return YES;
+    if (endDateComparison == NSOrderedSame)
+        return YES;
+    
+    if (beginDateComparison == NSOrderedAscending)
     	return NO;
     
-    if (endDateComparison == NSOrderedDescending || endDateComparison == NSOrderedSame)
+    if (endDateComparison == NSOrderedDescending)
     	return NO;
     
     return YES;
