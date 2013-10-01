@@ -218,7 +218,7 @@
     toDateComp = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit) fromDate:[self.calendar dateFromComponents:toDateComp]];
     
     NSInteger section = (yearDiff * 12) + monthDiff;
-    NSInteger row = [toDateComp weekday] - 1 + dayDiff;
+    NSInteger row = [toDateComp weekday] - 1 + dayDiff - 1 + self.daysInWeek;
     
     [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:row inSection:section] animated:YES scrollPosition:UICollectionViewScrollPositionTop];
 }
