@@ -187,6 +187,9 @@
 }
 
 - (BOOL)canSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (!_tapEnabled) {
+        return NO;
+    }
     MNCalendarViewCell *cell = (MNCalendarViewCell *)[self collectionView:self.collectionView cellForItemAtIndexPath:indexPath];
     
     BOOL enabled = cell.enabled;
