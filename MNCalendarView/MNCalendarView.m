@@ -188,6 +188,7 @@
 
 - (BOOL)canSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (!_tapEnabled) {
+        [self.collectionView reloadData];
         return NO;
     }
     MNCalendarViewCell *cell = (MNCalendarViewCell *)[self collectionView:self.collectionView cellForItemAtIndexPath:indexPath];
