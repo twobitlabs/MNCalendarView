@@ -223,15 +223,17 @@
     if ([date compare:_fromDate] == NSOrderedAscending || [date compare:_toDate] == NSOrderedDescending) {
         return nil;
     }
-    NSDateComponents *toDateComp      = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:date];
-    NSDateComponents *initialDateComp = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:_fromDate];
+    unsigned units = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit;
     
-    NSInteger yearDiff  = [toDateComp year] - [initialDateComp year];
-    NSInteger monthDiff = fabs([toDateComp month] - [initialDateComp month]);
-    NSInteger dayDiff   = [toDateComp day];
+    NSDateComponents *components = [self.calendar components:units fromDate:_fromDate toDate:date options:0];
+    NSDateComponents *toDateComp = [self.calendar components:units fromDate:date];
+    
+    NSInteger yearDiff  = components.year;
+    NSInteger monthDiff = components.month;
+    NSInteger dayDiff   = components.day;
     
     [toDateComp setDay:1];
-    toDateComp = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit) fromDate:[self.calendar dateFromComponents:toDateComp]];
+    toDateComp = [self.calendar components:units fromDate:[self.calendar dateFromComponents:toDateComp]];
     
     NSInteger section = (yearDiff * 12) + monthDiff;
     NSInteger row = [toDateComp weekday] - 1 + dayDiff - 1 + self.daysInWeek;
