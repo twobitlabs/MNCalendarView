@@ -288,45 +288,36 @@
     return headerView;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
     NSDate *monthDate = self.monthDates[section];
     
-    NSDateComponents *components =
-    [self.calendar components:NSDayCalendarUnit
-                     fromDate:[self firstVisibleDateOfMonth:monthDate]
-                       toDate:[self lastVisibleDateOfMonth:monthDate]
-                      options:0];
+    NSDateComponents *components = [self.calendar components:NSDayCalendarUnit
+                                                    fromDate:[self firstVisibleDateOfMonth:monthDate]
+                                                      toDate:[self lastVisibleDateOfMonth:monthDate]
+                                                     options:0];
     
     return self.daysInWeek + components.day + 1;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
     
     if (indexPath.item < self.daysInWeek) {
-        MNCalendarViewWeekdayCell *cell =
-        [collectionView dequeueReusableCellWithReuseIdentifier:MNCalendarViewWeekdayCellIdentifier
-                                                  forIndexPath:indexPath];
-        
-        cell.backgroundColor = self.collectionView.backgroundColor;
-        cell.titleLabel.text = self.weekdaySymbols[indexPath.item];
-        cell.separatorColor = self.separatorColor;
-        cell.titleLabel.textColor = self.headerTitleColor;
+        MNCalendarViewWeekdayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:MNCalendarViewWeekdayCellIdentifier forIndexPath:indexPath];
+        cell.backgroundColor            = self.collectionView.backgroundColor;
+        cell.titleLabel.text            = self.weekdaySymbols[indexPath.item];
+        cell.separatorColor             = self.separatorColor;
+        cell.titleLabel.textColor       = self.headerTitleColor;
         return cell;
     }
-    MNCalendarViewDayCell *cell =
-    [collectionView dequeueReusableCellWithReuseIdentifier:MNCalendarViewDayCellIdentifier
-                                              forIndexPath:indexPath];
-    cell.separatorColor = self.separatorColor;
+    MNCalendarViewDayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:MNCalendarViewDayCellIdentifier forIndexPath:indexPath];
+    cell.separatorColor         = self.separatorColor;
+    NSDate *monthDate           = self.monthDates[indexPath.section];
+    NSDate *firstDateInMonth    = [self firstVisibleDateOfMonth:monthDate];
+    NSUInteger day              = indexPath.item - self.daysInWeek;
     
-    NSDate *monthDate = self.monthDates[indexPath.section];
-    NSDate *firstDateInMonth = [self firstVisibleDateOfMonth:monthDate];
-    
-    NSUInteger day = indexPath.item - self.daysInWeek;
-    
-    NSDateComponents *components =
-    [self.calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit
-                     fromDate:firstDateInMonth];
+    NSDateComponents *components = [self.calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:firstDateInMonth];
     components.day += day;
     
     NSDate *date = [self.calendar dateFromComponents:components];
@@ -338,17 +329,21 @@
     
     if (self.selectedDate && cell.enabled) {
         if (self.selectedDateRange.count < 2) {
-            [cell setSelected:NO];
-        }else{
+            [cell setSelected:[date isEqualToDate:self.selectedDate]];
+        }
+        else {
             [cell.selectedBackgroundView setBackgroundColor:_inRangeDateBackgroundColor];
             [cell setSelected:[NSDate date:date isBetweenDate:self.selectedDateRange[0] andDate:self.selectedDateRange[1]]];
         }
         
         if ([date timeIntervalSinceDate:_selectedDateRange[0]] == 0) {
             [cell.selectedBackgroundView setBackgroundColor:_beginDateBackgroundColor];
-        }else if ([date timeIntervalSinceDate:_selectedDateRange[1]] == 0){
+        }
+        else if ([date timeIntervalSinceDate:_selectedDateRange[1]] == 0){
             [cell.selectedBackgroundView setBackgroundColor:_endateDateBackgroundColor];
         }
+        
+        
     }
     
     if (!cell.backgroundView) {
