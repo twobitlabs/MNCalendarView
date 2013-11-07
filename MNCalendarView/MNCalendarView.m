@@ -307,6 +307,22 @@
         }
     }
     
+    if (!cell.backgroundView) {
+        cell.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(1, 1, cell.frame.size.width-2, cell.frame.size.height-2)];
+    }
+    cell.backgroundView.backgroundColor = [UIColor clearColor];
+    
+    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:date];
+    if (0 < interval && interval < MN_DAY) {
+        NSDictionary *stringAttributes = @{ NSFontAttributeName : [UIFont boldSystemFontOfSize:[UIFont systemFontSize]],
+                                            //NSUnderlineStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+                                            };
+        cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:cell.titleLabel.text attributes:stringAttributes];
+        cell.titleLabel.textColor      = [UIColor whiteColor];
+        
+        cell.backgroundView.backgroundColor = [UIColor colorWithRed:0.09 green:0.06 blue:0.21 alpha:1.0];
+    }
+    
     [cell hideIfOtherMonthDate];
     
     return cell;
