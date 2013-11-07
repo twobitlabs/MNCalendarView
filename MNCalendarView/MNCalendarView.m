@@ -37,19 +37,20 @@
 
 @implementation MNCalendarView
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame
+{
     if (self = [super initWithFrame:frame]) {
         
-        self.calendar   = NSCalendar.currentCalendar;
-        self.fromDate   = [NSDate.date mn_beginningOfDay:self.calendar];
-        self.toDate     = [self.fromDate dateByAddingTimeInterval:MN_YEAR * 4];
-        self.daysInWeek = 7;
+        self.calendar           = NSCalendar.currentCalendar;
+        self.fromDate           = [NSDate.date mn_beginningOfDay:self.calendar];
+        self.toDate             = [self.fromDate dateByAddingTimeInterval:MN_YEAR * 4];
+        self.daysInWeek         = 7;
         
-        self.headerViewClass  = MNCalendarHeaderView.class;
-        self.weekdayCellClass = MNCalendarViewWeekdayCell.class;
-        self.dayCellClass     = MNCalendarViewDayCell.class;
+        self.headerViewClass    = MNCalendarHeaderView.class;
+        self.weekdayCellClass   = MNCalendarViewWeekdayCell.class;
+        self.dayCellClass       = MNCalendarViewDayCell.class;
         
-        _separatorColor = [UIColor colorWithRed:.85f green:.85f blue:.85f alpha:1.f];
+        _separatorColor         = [UIColor colorWithRed:.85f green:.85f blue:.85f alpha:1.f];
         
         [self addSubview:self.collectionView];
         [self applyConstraints];
@@ -60,12 +61,14 @@
     return self;
 }
 
--(void)setHeaderTitleColor:(UIColor *)headerTitleColor{
+- (void)setHeaderTitleColor:(UIColor *)headerTitleColor
+{
     _headerTitleColor = headerTitleColor;
     [self reloadData];
 }
 
-- (UICollectionView *)collectionView {
+- (UICollectionView *)collectionView
+{
     if (nil == _collectionView) {
         MNCalendarViewLayout *layout = [[MNCalendarViewLayout alloc] init];
         
@@ -94,16 +97,19 @@
     return _collectionView;
 }
 
--(void)setPagingEnableSetting:(BOOL)pagingEnableSetting{
+- (void)setPagingEnableSetting:(BOOL)pagingEnableSetting
+{
     _pagingEnableSetting = pagingEnableSetting;
     [(MNCalendarViewLayout *)self.collectionView.collectionViewLayout setPagingEnable:pagingEnableSetting];
 }
 
-- (void)setSeparatorColor:(UIColor *)separatorColor {
+- (void)setSeparatorColor:(UIColor *)separatorColor
+{
     _separatorColor = separatorColor;
 }
 
-- (void)setCalendar:(NSCalendar *)calendar {
+- (void)setCalendar:(NSCalendar *)calendar
+{
     _calendar = calendar;
     
     self.monthFormatter = [[NSDateFormatter alloc] init];
@@ -111,16 +117,19 @@
     [self.monthFormatter setDateFormat:@"MMMM yyyy"];
 }
 
-- (void)setSelectedDate:(NSDate *)selectedDate {
+- (void)setSelectedDate:(NSDate *)selectedDate
+{
     _selectedDate = [selectedDate mn_beginningOfDay:self.calendar];
 }
 
--(void)setSelectedDateRange:(NSArray *)selectedDateRange{
+- (void)setSelectedDateRange:(NSArray *)selectedDateRange
+{
     _selectedDateRange = selectedDateRange;
     [self.collectionView reloadData];
 }
 
-- (void)reloadData {
+- (void)reloadData
+{
     NSMutableArray *monthDates = @[].mutableCopy;
     MNFastDateEnumeration *enumeration =
     [[MNFastDateEnumeration alloc] initWithFromDate:[self.fromDate mn_firstDateOfMonth:self.calendar]
@@ -140,7 +149,8 @@
     [self.collectionView reloadData];
 }
 
-- (NSDate *)firstVisibleDateOfMonth:(NSDate *)date {
+- (NSDate *)firstVisibleDateOfMonth:(NSDate *)date
+{
     date = [date mn_firstDateOfMonth:self.calendar];
     
     NSDateComponents *components =
@@ -151,7 +161,8 @@
     [[date mn_dateWithDay:-((components.weekday - 1) % self.daysInWeek) calendar:self.calendar] dateByAddingTimeInterval:MN_DAY];
 }
 
-- (NSDate *)lastVisibleDateOfMonth:(NSDate *)date {
+- (NSDate *)lastVisibleDateOfMonth:(NSDate *)date
+{
     date = [date mn_lastDateOfMonth:self.calendar];
     
     NSDateComponents *components =
@@ -163,7 +174,8 @@
                 calendar:self.calendar];
 }
 
-- (void)applyConstraints {
+- (void)applyConstraints
+{
     NSDictionary *views = @{@"collectionView" : self.collectionView};
     [self addConstraints:
      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|"
@@ -179,14 +191,16 @@
      ];
 }
 
-- (BOOL)dateEnabled:(NSDate *)date {
+- (BOOL)dateEnabled:(NSDate *)date
+{
     if (self.delegate && [self.delegate respondsToSelector:@selector(calendarView:shouldSelectDate:)]) {
         return [self.delegate calendarView:self shouldSelectDate:date];
     }
     return YES;
 }
 
-- (BOOL)canSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)canSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
     if (!_tapEnabled) {
         [self.collectionView reloadData];
         return NO;
@@ -204,16 +218,17 @@
     return enabled;
 }
 
--(void)scrollToDate:(NSDate *)date{
+- (NSIndexPath *)indexPathForDate:(NSDate *)date
+{
     if ([date compare:_fromDate] == NSOrderedAscending || [date compare:_toDate] == NSOrderedDescending) {
-        return;
+        return nil;
     }
-    NSDateComponents *toDateComp = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:date];
+    NSDateComponents *toDateComp      = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:date];
     NSDateComponents *initialDateComp = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:_fromDate];
     
-    NSInteger yearDiff = [toDateComp year] - [initialDateComp year];
+    NSInteger yearDiff  = [toDateComp year] - [initialDateComp year];
     NSInteger monthDiff = fabs([toDateComp month] - [initialDateComp month]);
-    NSInteger dayDiff = [toDateComp day];
+    NSInteger dayDiff   = [toDateComp day];
     
     [toDateComp setDay:1];
     toDateComp = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit) fromDate:[self.calendar dateFromComponents:toDateComp]];
@@ -221,8 +236,37 @@
     NSInteger section = (yearDiff * 12) + monthDiff;
     NSInteger row = [toDateComp weekday] - 1 + dayDiff - 1 + self.daysInWeek;
     
-    [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:row inSection:section] animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+    return [NSIndexPath indexPathForItem:row inSection:section];
 }
+
+- (void)scrollToDate:(NSDate *)date animated:(BOOL)animated
+{
+    NSIndexPath *indexPath = [self indexPathForDate:date];
+    if (!indexPath) {
+        return;
+    }
+    [self.collectionView scrollToItemAtIndexPath:indexPath
+                                atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                        animated:animated];
+}
+
+- (void)scrollToDate:(NSDate *)date
+{
+    [self scrollToDate:date animated:YES];
+}
+
+- (void)selectDate:(NSDate *)date animated:(BOOL)animated
+{
+    NSIndexPath *indexPath = [self indexPathForDate:date];
+    if (!indexPath) {
+        return;
+    }
+    [self.collectionView selectItemAtIndexPath:indexPath
+                                      animated:animated
+                                scrollPosition:UICollectionViewScrollPositionCenteredVertically];
+}
+
+
 
 #pragma mark - UICollectionViewDataSource
 

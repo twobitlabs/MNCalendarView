@@ -20,63 +20,50 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
 
 @implementation MNCalendarViewDayCell
 
-- (void)setDate:(NSDate *)date
-          month:(NSDate *)month
-       calendar:(NSCalendar *)calendar {
-    
+- (void)setDate:(NSDate *)date month:(NSDate *)month calendar:(NSCalendar *)calendar
+{
     self.date     = date;
     self.month    = month;
     self.calendar = calendar;
     
-    NSDateComponents *components =
-    [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit
-                     fromDate:self.date];
+    NSDateComponents *components = [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit fromDate:self.date];
+    NSDateComponents *monthComponents = [self.calendar components:NSMonthCalendarUnit fromDate:self.month];
     
-    NSDateComponents *monthComponents =
-    [self.calendar components:NSMonthCalendarUnit
-                     fromDate:self.month];
-    
-    self.weekday = components.weekday;
+    self.weekday         = components.weekday;
     self.titleLabel.text = [NSString stringWithFormat:@"%d", components.day];
-    self.enabled = monthComponents.month == components.month;
+    self.enabled         = monthComponents.month == components.month;
     
     [self setNeedsDisplay];
 }
 
--(void)hideIfOtherMonthDate{
-    NSDateComponents *components =
-    [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit
-                     fromDate:self.date];
+- (void)hideIfOtherMonthDate
+{
+    NSDateComponents *components      = [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit fromDate:self.date];
+    NSDateComponents *monthComponents = [self.calendar components:NSMonthCalendarUnit fromDate:self.month];
     
-    NSDateComponents *monthComponents =
-    [self.calendar components:NSMonthCalendarUnit
-                     fromDate:self.month];
     if (monthComponents.month != components.month) {
         [self.titleLabel setText:@""];
         self.selected = NO;
-        //        self.enabled = NO;
+        self.enabled  = NO;
     }
-    
 }
 
-- (void)setEnabled:(BOOL)enabled {
+- (void)setEnabled:(BOOL)enabled
+{
     [super setEnabled:enabled];
     
-    self.titleLabel.textColor =
-    self.enabled ? UIColor.darkTextColor : UIColor.lightGrayColor;
+    self.titleLabel.textColor = self.enabled ? UIColor.darkTextColor : UIColor.lightGrayColor;
     
-    self.backgroundColor =
-    self.enabled ? UIColor.whiteColor : [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
+    self.backgroundColor = self.enabled ? UIColor.whiteColor : [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
 }
 
-- (void)drawRect:(CGRect)rect {
+- (void)drawRect:(CGRect)rect
+{
     [super drawRect:rect];
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGColorRef separatorColor = self.separatorColor.CGColor;
-    
-    CGSize size = self.bounds.size;
+    CGContextRef context        = UIGraphicsGetCurrentContext();
+    CGColorRef separatorColor   = self.separatorColor.CGColor;
+    CGSize size                 = self.bounds.size;
     
     if (self.weekday != 7) {
         CGFloat pixel = 1.f / [UIScreen mainScreen].scale;
