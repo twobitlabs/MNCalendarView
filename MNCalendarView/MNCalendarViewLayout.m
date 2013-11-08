@@ -59,9 +59,12 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [super layoutAttributesForItemAtIndexPath:indexPath];
+    UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForItemAtIndexPath:indexPath];
+    if (!attributes) {
+        attributes = [[UICollectionViewLayoutAttributes alloc] init];
+    }
+    return attributes;
 }
-
 
 
 @end
