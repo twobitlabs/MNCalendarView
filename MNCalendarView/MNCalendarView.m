@@ -220,7 +220,7 @@
 
 - (NSIndexPath *)indexPathForDate:(NSDate *)date
 {
-    if ([date compare:_fromDate] == NSOrderedAscending || [date compare:_toDate] == NSOrderedDescending) {
+    if (!date || [date compare:_fromDate] == NSOrderedAscending || [date compare:_toDate] == NSOrderedDescending) {
         return nil;
     }
     unsigned units = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit;
