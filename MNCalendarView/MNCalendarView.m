@@ -223,20 +223,21 @@
     if (!date || [date compare:_fromDate] == NSOrderedAscending || [date compare:_toDate] == NSOrderedDescending) {
         return nil;
     }
+    
     unsigned units = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit;
     
-    NSDateComponents *components = [self.calendar components:units fromDate:_fromDate toDate:date options:0];
-    NSDateComponents *toDateComp = [self.calendar components:units fromDate:date];
+    NSDateComponents *fromDateComp = [self.calendar components:units fromDate:_fromDate];
+    NSDateComponents *toDateComp   = [self.calendar components:units fromDate:date];
     
-    NSInteger yearDiff  = components.year;
-    NSInteger monthDiff = components.month;
-    NSInteger dayDiff   = components.day;
+    NSInteger yearDiff  = toDateComp.year - fromDateComp.year;
+    NSInteger monthDiff = toDateComp.month - fromDateComp.month;
+    NSInteger monthDay  = toDateComp.day;
     
     [toDateComp setDay:1];
     toDateComp = [self.calendar components:units fromDate:[self.calendar dateFromComponents:toDateComp]];
     
     NSInteger section = (yearDiff * 12) + monthDiff;
-    NSInteger row = [toDateComp weekday] - 1 + dayDiff - 1 + self.daysInWeek;
+    NSInteger row = self.daysInWeek + [toDateComp weekday] + monthDay - 2;
     
     return [NSIndexPath indexPathForItem:row inSection:section];
 }
