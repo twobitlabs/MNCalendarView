@@ -33,6 +33,8 @@
 @property(nonatomic,strong) UIColor *beginDateBackgroundColor;
 @property(nonatomic,strong) UIColor *inRangeDateBackgroundColor;
 @property(nonatomic,strong) UIColor *endateDateBackgroundColor;
+@property(nonatomic,strong) UIColor *selectedDayBackgroundColor;
+@property(nonatomic,strong) UIColor *todayBackgroundColor;
 @property(nonatomic,assign) BOOL pagingEnableSetting;
 @property(nonatomic,assign) BOOL addsFutureDates;
 @property(nonatomic, assign) BOOL tapEnabled;
@@ -41,6 +43,10 @@
 @property(nonatomic,strong) Class weekdayCellClass;
 @property(nonatomic,strong) Class dayCellClass;
 
+- (id)initWithFrame:(CGRect)frame referenceDate:(NSDate *)referenceDate daysBefore:(int)daysBefore daysAfter:(int)daysAfter;
+
+- (void)scrollToMonthForDate:(NSDate *)date;
+- (void)scrollToMonthForDate:(NSDate *)date animated:(BOOL)animated;
 - (void)scrollToDate:(NSDate *)date;
 - (void)scrollToDate:(NSDate *)date animated:(BOOL)animated;
 - (void)selectDate:(NSDate *)date animated:(BOOL)animated;
