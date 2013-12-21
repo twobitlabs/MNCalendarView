@@ -39,11 +39,27 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
+    return [self initWithFrame:frame referenceDate:nil daysBefore:-1 daysAfter:-1];
+}
+
+// designated initializer
+// - daysBefore and daysAfter are relative to referenceDate for determining from and to dates.
+// - referenceDate defaults to today.
+// - referenceDate is so named because it's a point of reference for determining from/to dates; it's not necessarily selected or today's date.
+// - daysBefore and daysAfter can be set to -1 to use default values for fromDate and toDate; i.e. from today to 4 years from today
+- (id)initWithFrame:(CGRect)frame referenceDate:(NSDate *)referenceDate daysBefore:(int)daysBefore daysAfter:(int)daysAfter
+{
     if (self = [super initWithFrame:frame]) {
         
         self.calendar           = NSCalendar.currentCalendar;
-        self.fromDate           = [NSDate.date mn_beginningOfDay:self.calendar];
-        self.toDate             = [self.fromDate dateByAddingTimeInterval:MN_YEAR * 4];
+
+        // default to today's date
+        if (!referenceDate) {
+            referenceDate = [NSDate date];
+        }
+        self.fromDate = (daysBefore < 0 ? [referenceDate mn_beginningOfDay:self.calendar] : [referenceDate dateByAddingTimeInterval:daysBefore * MN_DAY * -1]);
+        self.toDate = [referenceDate dateByAddingTimeInterval:(daysAfter < 0 ? 4 * MN_YEAR : daysAfter * MN_DAY)];
+
         self.daysInWeek         = 7;
         
         self.headerViewClass    = MNCalendarHeaderView.class;
@@ -242,6 +258,24 @@
     return [NSIndexPath indexPathForItem:row inSection:section];
 }
 
+- (void)scrollToMonthForDate:(NSDate *)date {
+    [self scrollToMonthForDate:date animated:YES];
+}
+
+// positions the month header at the top of the view
+- (void)scrollToMonthForDate:(NSDate *)date animated:(BOOL)animated {
+    // from http://stackoverflow.com/questions/16246240/programmatically-scroll-to-a-supplementary-view-within-uicollectionview
+
+    NSIndexPath *indexPath = [self indexPathForDate:date]; // indexPath of your header, only section is relevant
+    if (!indexPath) {
+        return;
+    }
+
+    CGFloat offsetY = [self.collectionView layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader atIndexPath:indexPath].frame.origin.y;
+
+    [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, offsetY - self.collectionView.contentInset.top) animated:animated];
+}
+
 - (void)scrollToDate:(NSDate *)date animated:(BOOL)animated
 {
     NSIndexPath *indexPath = [self indexPathForDate:date];
@@ -333,6 +367,9 @@
     if (self.selectedDate && cell.enabled) {
         if (self.selectedDateRange.count < 2) {
             [cell setSelected:[date isEqualToDate:self.selectedDate]];
+            if (self.selectedDayBackgroundColor) {
+                [cell.selectedBackgroundView setBackgroundColor:self.selectedDayBackgroundColor];
+            }
         }
         else {
             [cell.selectedBackgroundView setBackgroundColor:_inRangeDateBackgroundColor];
@@ -362,7 +399,7 @@
         cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:cell.titleLabel.text attributes:stringAttributes];
         cell.titleLabel.textColor      = [UIColor whiteColor];
         
-        cell.backgroundView.backgroundColor = [UIColor colorWithRed:0.09 green:0.06 blue:0.21 alpha:1.0];
+        cell.backgroundView.backgroundColor = self.todayBackgroundColor ? self.todayBackgroundColor : [UIColor colorWithRed:0.09 green:0.06 blue:0.21 alpha:1.0];
     }
     
     [cell hideIfOtherMonthDate];
