@@ -28,6 +28,10 @@
 @property(nonatomic,copy)   NSDate     *selectedDate;
 @property(nonatomic, copy) NSArray *selectedDateRange;
 @property(nonatomic, strong) UIColor *headerTitleColor;
+@property(nonatomic, strong) UIColor *enabledDayTextColor;
+@property(nonatomic, strong) UIColor *disabledDayTextColor;
+@property(nonatomic, strong) UIColor *enabledDayBackgroundColor;
+@property(nonatomic, strong) UIColor *disabledDayBackgroundColor;
 
 @property(nonatomic,strong) UIColor *separatorColor UI_APPEARANCE_SELECTOR; // default is the standard separator gray
 @property(nonatomic,strong) UIColor *beginDateBackgroundColor;
@@ -35,6 +39,10 @@
 @property(nonatomic,strong) UIColor *endateDateBackgroundColor;
 @property(nonatomic,strong) UIColor *selectedDayBackgroundColor;
 @property(nonatomic,strong) UIColor *todayBackgroundColor;
+@property(nonatomic,strong) UIFont *headerFont;
+@property(nonatomic,strong) UIFont *weekdayFont;
+@property(nonatomic,strong) UIFont *dayFont;
+@property(nonatomic,strong) UIFont *todayFont;
 @property(nonatomic,assign) BOOL pagingEnableSetting;
 @property(nonatomic,assign) BOOL addsFutureDates;
 @property(nonatomic, assign) BOOL tapEnabled;
@@ -50,6 +58,9 @@
 - (void)scrollToDate:(NSDate *)date;
 - (void)scrollToDate:(NSDate *)date animated:(BOOL)animated;
 - (void)selectDate:(NSDate *)date animated:(BOOL)animated;
+
+// set header and weekday title color, optionally reloading data
+- (void)setHeaderTitleColor:(UIColor *)headerTitleColor reloadData:(BOOL)reloadData;
 
 - (void)reloadData;
 

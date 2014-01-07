@@ -23,7 +23,6 @@ NSString *const MNCalendarHeaderViewIdentifier = @"MNCalendarHeaderViewIdentifie
     self.titleLabel = [[UILabel alloc] initWithFrame:self.bounds];
     self.titleLabel.backgroundColor = UIColor.clearColor;
     self.titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    self.titleLabel.font = [UIFont systemFontOfSize:16.f];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
 
     [self addSubview:self.titleLabel];
