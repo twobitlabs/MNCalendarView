@@ -20,6 +20,16 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
 
 @implementation MNCalendarViewDayCell
 
+- (id)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        self.enabledTextColor = [UIColor darkTextColor];
+        self.disabledTextColor = [UIColor lightGrayColor];
+        self.enabledBackgroundColor = [UIColor whiteColor];
+        self.disabledBackgroundColor = [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
+    }
+    return self;
+}
+
 - (void)setDate:(NSDate *)date month:(NSDate *)month calendar:(NSCalendar *)calendar
 {
     self.date     = date;
@@ -36,12 +46,17 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
     [self setNeedsDisplay];
 }
 
-- (void)hideIfOtherMonthDate
+- (BOOL)isOtherMonthDate
 {
     NSDateComponents *components      = [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit fromDate:self.date];
     NSDateComponents *monthComponents = [self.calendar components:NSMonthCalendarUnit fromDate:self.month];
-    
-    if (monthComponents.month != components.month) {
+
+    return (monthComponents.month != components.month);
+}
+
+- (void)hideIfOtherMonthDate
+{
+    if ([self isOtherMonthDate]) {
         [self.titleLabel setText:@""];
         self.selected = NO;
         self.enabled  = NO;
@@ -52,9 +67,9 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
 {
     [super setEnabled:enabled];
     
-    self.titleLabel.textColor = self.enabled ? UIColor.darkTextColor : UIColor.lightGrayColor;
+    self.titleLabel.textColor = self.enabled ? self.enabledTextColor : self.disabledTextColor;
     
-    self.backgroundColor = self.enabled ? UIColor.whiteColor : [UIColor colorWithRed:.96f green:.96f blue:.96f alpha:1.f];
+    self.backgroundColor = self.enabled ? self.enabledBackgroundColor : self.disabledBackgroundColor;
 }
 
 - (void)drawRect:(CGRect)rect

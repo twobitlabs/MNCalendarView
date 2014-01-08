@@ -14,11 +14,16 @@ extern NSString *const MNCalendarViewDayCellIdentifier;
 
 @property(nonatomic,strong,readonly) NSDate *date;
 @property(nonatomic,strong,readonly) NSDate *month;
+@property(nonatomic,strong) UIColor *enabledTextColor;
+@property(nonatomic,strong) UIColor *disabledTextColor;
+@property(nonatomic,strong) UIColor *enabledBackgroundColor;
+@property(nonatomic,strong) UIColor *disabledBackgroundColor;
 
 - (void)setDate:(NSDate *)date
           month:(NSDate *)month
        calendar:(NSCalendar *)calendar;
 
+-(BOOL)isOtherMonthDate;
 -(void)hideIfOtherMonthDate;
 
 @end

@@ -71,6 +71,10 @@
         [self addSubview:self.collectionView];
         [self applyConstraints];
         self.headerTitleColor = [UIColor blackColor];
+        self.headerFont = [UIFont systemFontOfSize:16.f];
+        self.weekdayFont = [UIFont systemFontOfSize:12.f];
+        self.dayFont = [UIFont systemFontOfSize:14.f];
+        self.todayFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
         self.tapEnabled = YES;
         
     }
@@ -79,8 +83,15 @@
 
 - (void)setHeaderTitleColor:(UIColor *)headerTitleColor
 {
+    [self setHeaderTitleColor:headerTitleColor reloadData:YES];
+}
+
+- (void)setHeaderTitleColor:(UIColor *)headerTitleColor reloadData:(BOOL)reloadData
+{
     _headerTitleColor = headerTitleColor;
-    [self reloadData];
+    if (reloadData) {
+        [self reloadData];
+    }
 }
 
 - (UICollectionView *)collectionView
@@ -321,6 +332,7 @@
     [headerView setTitleColor:self.headerTitleColor];
     headerView.backgroundColor = self.collectionView.backgroundColor;
     headerView.titleLabel.text = [self.monthFormatter stringFromDate:self.monthDates[indexPath.section]];
+    headerView.titleLabel.font = self.headerFont;
     
     return headerView;
 }
@@ -346,10 +358,24 @@
         cell.titleLabel.text            = self.weekdaySymbols[indexPath.item];
         cell.separatorColor             = self.separatorColor;
         cell.titleLabel.textColor       = self.headerTitleColor;
+        cell.titleLabel.font            = self.weekdayFont;
         return cell;
     }
     MNCalendarViewDayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:MNCalendarViewDayCellIdentifier forIndexPath:indexPath];
     cell.separatorColor         = self.separatorColor;
+    if (self.enabledDayTextColor) {
+        cell.enabledTextColor = self.enabledDayTextColor;
+    }
+    if (self.disabledDayTextColor) {
+        cell.disabledTextColor = self.disabledDayTextColor;
+    }
+    if (self.enabledDayBackgroundColor) {
+        cell.enabledBackgroundColor = self.enabledDayBackgroundColor;
+    }
+    if (self.disabledDayBackgroundColor) {
+        cell.disabledBackgroundColor = self.disabledDayBackgroundColor;
+    }
+    cell.titleLabel.font        = self.dayFont;
     NSDate *monthDate           = self.monthDates[indexPath.section];
     NSDate *firstDateInMonth    = [self firstVisibleDateOfMonth:monthDate];
     NSUInteger day              = indexPath.item - self.daysInWeek;
@@ -392,9 +418,9 @@
     cell.backgroundView.backgroundColor = [UIColor clearColor];
     
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:date];
-    if (0 < interval && interval < MN_DAY) {
-        NSDictionary *stringAttributes = @{ NSFontAttributeName : [UIFont boldSystemFontOfSize:[UIFont systemFontSize]],
-                                            //NSUnderlineStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
+    if (0 < interval && interval < MN_DAY && ![cell isOtherMonthDate]) {
+        NSDictionary *stringAttributes = @{ NSFontAttributeName : self.todayFont
+                                            //,NSUnderlineStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
                                             };
         cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:cell.titleLabel.text attributes:stringAttributes];
         cell.titleLabel.textColor      = [UIColor whiteColor];
