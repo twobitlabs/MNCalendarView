@@ -375,6 +375,9 @@
     if (self.disabledDayBackgroundColor) {
         cell.disabledBackgroundColor = self.disabledDayBackgroundColor;
     }
+    if ( self.todayBackgroundColor ) {
+        cell.selectedBackgroundView.backgroundColor = self.todayBackgroundColor;
+    }
     cell.titleLabel.font        = self.dayFont;
     NSDate *monthDate           = self.monthDates[indexPath.section];
     NSDate *firstDateInMonth    = [self firstVisibleDateOfMonth:monthDate];
