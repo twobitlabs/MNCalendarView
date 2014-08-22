@@ -74,4 +74,39 @@
     return YES;
 }
 
+- (instancetype)firstDateOfWeekWithCalendar:(NSCalendar *)calendar
+{
+
+    NSDate *startOfWeek;
+    [calendar rangeOfUnit:NSWeekOfYearCalendarUnit startDate:&startOfWeek interval:NULL forDate:self];
+    return startOfWeek;
+
+}
+
+- (instancetype)firstDateOfMonthWithCalendar:(NSCalendar *)calendar
+{
+
+    NSDate *startOfMonth;
+    [calendar rangeOfUnit:NSMonthCalendarUnit startDate:&startOfMonth interval:NULL forDate:self];
+    return startOfMonth;
+
+}
+
+- (instancetype)lastDateOfWeekWithCalendar:(NSCalendar *)calendar
+{
+
+    NSDateComponents * oneWeek = [[NSDateComponents alloc] init];
+    [oneWeek setWeek:1];
+    return [[calendar dateByAddingComponents:oneWeek toDate:[self firstDateOfWeekWithCalendar:calendar] options:0] dateByAddingTimeInterval:-1];
+
+}
+
+- (instancetype)lastDateOfMonthWithCalendar:(NSCalendar *)calendar
+{
+
+    NSRange days = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self];
+    return [[self firstDateOfMonthWithCalendar:calendar] dateByAddingTimeInterval:(days.length * 24 * 60 * 60) - 1];
+    
+}
+
 @end

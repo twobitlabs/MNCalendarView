@@ -10,6 +10,17 @@
 
 @interface NSDate (MNAdditions)
 
+
+- (instancetype)firstDateOfWeekWithCalendar:(NSCalendar *)calendar;
+
+- (instancetype)lastDateOfWeekWithCalendar:(NSCalendar *)calendar;
+
+- (instancetype)firstDateOfMonthWithCalendar:(NSCalendar *)calendar;
+
+- (instancetype)lastDateOfMonthWithCalendar:(NSCalendar *)calendar;
+
+
+
 - (instancetype)mn_firstDateOfMonth:(NSCalendar *)calendar;
 
 - (instancetype)mn_lastDateOfMonth:(NSCalendar *)calendar;

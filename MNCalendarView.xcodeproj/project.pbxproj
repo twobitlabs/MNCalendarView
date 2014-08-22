@@ -10,7 +10,6 @@
 		39075414179F6DC5002AC1EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39075413179F6DC5002AC1EC /* Foundation.framework */; };
 		39075419179F6DC5002AC1EC /* MNCalendarView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 39075418179F6DC5002AC1EC /* MNCalendarView.h */; };
 		3907541B179F6DC5002AC1EC /* MNCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3907541A179F6DC5002AC1EC /* MNCalendarView.m */; };
-		39075423179F6DC5002AC1EC /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39075422179F6DC5002AC1EC /* SenTestingKit.framework */; };
 		39075425179F6DC5002AC1EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39075424179F6DC5002AC1EC /* UIKit.framework */; };
 		39075426179F6DC5002AC1EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39075413179F6DC5002AC1EC /* Foundation.framework */; };
 		39075429179F6DC5002AC1EC /* libMNCalendarView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 39075410179F6DC5002AC1EC /* libMNCalendarView.a */; };
@@ -60,8 +59,7 @@
 		39075417179F6DC5002AC1EC /* MNCalendarView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MNCalendarView-Prefix.pch"; sourceTree = "<group>"; };
 		39075418179F6DC5002AC1EC /* MNCalendarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MNCalendarView.h; sourceTree = "<group>"; };
 		3907541A179F6DC5002AC1EC /* MNCalendarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MNCalendarView.m; sourceTree = "<group>"; };
-		39075421179F6DC5002AC1EC /* MNCalendarViewTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MNCalendarViewTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		39075422179F6DC5002AC1EC /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		39075421179F6DC5002AC1EC /* MNCalendarViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MNCalendarViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		39075424179F6DC5002AC1EC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		3907542C179F6DC5002AC1EC /* MNCalendarViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MNCalendarViewTests-Info.plist"; sourceTree = "<group>"; };
 		3907542E179F6DC5002AC1EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39075423179F6DC5002AC1EC /* SenTestingKit.framework in Frameworks */,
 				39075425179F6DC5002AC1EC /* UIKit.framework in Frameworks */,
 				39075426179F6DC5002AC1EC /* Foundation.framework in Frameworks */,
 				39075429179F6DC5002AC1EC /* libMNCalendarView.a in Frameworks */,
@@ -120,7 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				39075410179F6DC5002AC1EC /* libMNCalendarView.a */,
-				39075421179F6DC5002AC1EC /* MNCalendarViewTests.octest */,
+				39075421179F6DC5002AC1EC /* MNCalendarViewTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -129,7 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				39075413179F6DC5002AC1EC /* Foundation.framework */,
-				39075422179F6DC5002AC1EC /* SenTestingKit.framework */,
 				39075424179F6DC5002AC1EC /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -222,8 +218,8 @@
 			);
 			name = MNCalendarViewTests;
 			productName = MNCalendarViewTests;
-			productReference = 39075421179F6DC5002AC1EC /* MNCalendarViewTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 39075421179F6DC5002AC1EC /* MNCalendarViewTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -231,6 +227,7 @@
 		39075408179F6DC4002AC1EC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = min;
 			};
@@ -408,12 +405,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MNCalendarView/MNCalendarView-Prefix.pch";
 				INFOPLIST_FILE = "MNCalendarViewTests/MNCalendarViewTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -423,12 +420,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MNCalendarView/MNCalendarView-Prefix.pch";
 				INFOPLIST_FILE = "MNCalendarViewTests/MNCalendarViewTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
