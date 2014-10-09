@@ -94,9 +94,8 @@
 
 - (instancetype)lastDateOfWeekWithCalendar:(NSCalendar *)calendar
 {
-
     NSDateComponents * oneWeek = [[NSDateComponents alloc] init];
-    [oneWeek setWeek:1];
+    [oneWeek setWeekOfYear:1];
     return [[calendar dateByAddingComponents:oneWeek toDate:[self firstDateOfWeekWithCalendar:calendar] options:0] dateByAddingTimeInterval:-1];
 
 }
