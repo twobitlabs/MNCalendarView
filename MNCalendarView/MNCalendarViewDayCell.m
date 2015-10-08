@@ -36,8 +36,8 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
     self.month    = month;
     self.calendar = calendar;
     
-    NSDateComponents *components = [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit fromDate:self.date];
-    NSDateComponents *monthComponents = [self.calendar components:NSMonthCalendarUnit fromDate:self.month];
+    NSDateComponents *components = [self.calendar components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:self.date];
+    NSDateComponents *monthComponents = [self.calendar components:NSCalendarUnitMonth fromDate:self.month];
 
     self.weekday = (components.weekday + self.calendar.firstWeekday - 1) % 7;
     self.titleLabel.text = [NSString stringWithFormat:@"%@", @(components.day)];
@@ -49,8 +49,8 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
 
 - (BOOL)isOtherMonthDate
 {
-    NSDateComponents *components      = [self.calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit fromDate:self.date];
-    NSDateComponents *monthComponents = [self.calendar components:NSMonthCalendarUnit fromDate:self.month];
+    NSDateComponents *components      = [self.calendar components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitWeekday fromDate:self.date];
+    NSDateComponents *monthComponents = [self.calendar components:NSCalendarUnitMonth fromDate:self.month];
 
     return (monthComponents.month != components.month);
 }

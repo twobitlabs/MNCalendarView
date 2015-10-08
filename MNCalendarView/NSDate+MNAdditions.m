@@ -15,7 +15,7 @@
         calendar = [NSCalendar currentCalendar];
     }
     
-    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:self];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:self];
     
     [components setDay:1];
     
@@ -27,7 +27,7 @@
         calendar = [NSCalendar currentCalendar];
     }
     
-    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:self];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:self];
     [components setDay:0];
     [components setMonth:components.month + 1];
     
@@ -38,7 +38,7 @@
     if (nil == calendar) {
         calendar = [NSCalendar currentCalendar];
     }
-    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:self];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:self];
     [components setHour:0];
     
     return [calendar dateFromComponents:components];
@@ -48,7 +48,7 @@
     if (nil == calendar) {
         calendar = [NSCalendar currentCalendar];
     }
-    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:self];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:self];
     
     [components setDay:day];
     
@@ -78,7 +78,7 @@
 {
 
     NSDate *startOfWeek;
-    [calendar rangeOfUnit:NSWeekOfYearCalendarUnit startDate:&startOfWeek interval:NULL forDate:self];
+    [calendar rangeOfUnit:NSCalendarUnitWeekOfYear startDate:&startOfWeek interval:NULL forDate:self];
     return startOfWeek;
 
 }
@@ -87,7 +87,7 @@
 {
 
     NSDate *startOfMonth;
-    [calendar rangeOfUnit:NSMonthCalendarUnit startDate:&startOfMonth interval:NULL forDate:self];
+    [calendar rangeOfUnit:NSCalendarUnitMonth startDate:&startOfMonth interval:NULL forDate:self];
     return startOfMonth;
 
 }
@@ -103,7 +103,7 @@
 - (instancetype)lastDateOfMonthWithCalendar:(NSCalendar *)calendar
 {
 
-    NSRange days = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self];
+    NSRange days = [calendar rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:self];
     return [[self firstDateOfMonthWithCalendar:calendar] dateByAddingTimeInterval:(days.length * 24 * 60 * 60) - 1];
     
 }
