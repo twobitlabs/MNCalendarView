@@ -30,6 +30,8 @@
 @property(nonatomic, strong) UIColor *headerTitleColor;
 @property(nonatomic, strong) UIColor *enabledDayTextColor;
 @property(nonatomic, strong) UIColor *disabledDayTextColor;
+@property(nonatomic, strong) UIColor *selectedDayTextColor;
+@property(nonatomic, strong) UIColor *todayTextColor;
 @property(nonatomic, strong) UIColor *enabledDayBackgroundColor;
 @property(nonatomic, strong) UIColor *disabledDayBackgroundColor;
 

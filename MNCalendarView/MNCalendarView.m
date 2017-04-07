@@ -393,6 +393,9 @@
             if (self.selectedDayBackgroundColor) {
                 [cell.selectedBackgroundView setBackgroundColor:self.selectedDayBackgroundColor];
             }
+            if (self.selectedDayTextColor) {
+                cell.titleLabel.highlightedTextColor = self.selectedDayTextColor;
+            }
         }
         else {
             [cell.selectedBackgroundView setBackgroundColor:_inRangeDateBackgroundColor];
@@ -420,7 +423,7 @@
                                             //,NSUnderlineStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]
                                             };
         cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:cell.titleLabel.text attributes:stringAttributes];
-        cell.titleLabel.textColor      = [UIColor whiteColor];
+        cell.titleLabel.textColor      = self.todayTextColor ? self.todayTextColor : [UIColor whiteColor];
         
         cell.backgroundView.backgroundColor = self.todayBackgroundColor ? self.todayBackgroundColor : [UIColor colorWithRed:0.09 green:0.06 blue:0.21 alpha:1.0];
     }
