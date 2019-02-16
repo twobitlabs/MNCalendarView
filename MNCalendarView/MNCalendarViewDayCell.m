@@ -43,6 +43,8 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
     self.titleLabel.text = [NSString stringWithFormat:@"%@", @(components.day)];
     
     self.enabled         = monthComponents.month == components.month;
+
+    [self updateAccessibilityLabel];
     
     [self setNeedsDisplay];
 }
@@ -71,6 +73,8 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
     self.titleLabel.textColor = self.enabled ? self.enabledTextColor : self.disabledTextColor;
     
     self.backgroundColor = self.enabled ? self.enabledBackgroundColor : self.disabledBackgroundColor;
+
+    [self updateAccessibilityLabel];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -88,6 +92,14 @@ NSString *const MNCalendarViewDayCellIdentifier = @"MNCalendarViewDayCellIdentif
                           CGPointMake(size.width - pixel, size.height),
                           separatorColor,
                           pixel);
+    }
+}
+
+- (void)updateAccessibilityLabel {
+    if (self.enabled && self.date) {
+        self.titleLabel.accessibilityLabel = [NSDateFormatter localizedStringFromDate:self.date dateStyle:NSDateFormatterFullStyle timeStyle:NSDateFormatterNoStyle];
+    } else {
+        self.titleLabel.accessibilityLabel = nil;
     }
 }
 

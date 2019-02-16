@@ -24,9 +24,11 @@
 
 @property(nonatomic,strong,readwrite) NSArray *monthDates;
 @property(nonatomic,strong,readwrite) NSArray *weekdaySymbols;
+@property(nonatomic,strong,readwrite) NSArray *accessibilityWeekdaySymbols;
 @property(nonatomic,assign,readwrite) NSUInteger daysInWeek;
 
 @property(nonatomic,strong,readwrite) NSDateFormatter *monthFormatter;
+@property(nonatomic,strong,readwrite) NSString *todayString;
 
 - (NSDate *)firstVisibleDateOfMonth:(NSDate *)date;
 - (NSDate *)lastVisibleDateOfMonth:(NSDate *)date;
@@ -145,6 +147,11 @@
     self.monthFormatter = [[NSDateFormatter alloc] init];
     self.monthFormatter.calendar = calendar;
     [self.monthFormatter setDateFormat:@"MMMM yyyy"];
+
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.doesRelativeDateFormatting = YES;
+    formatter.dateStyle = NSDateFormatterFullStyle;
+    self.todayString = [formatter stringFromDate:[[NSDate alloc] init]];
 }
 
 - (void)setSelectedDate:(NSDate *)selectedDate
@@ -180,6 +187,7 @@
     formatter.calendar = self.calendar;
     
     self.weekdaySymbols = formatter.shortWeekdaySymbols;
+    self.accessibilityWeekdaySymbols = formatter.weekdaySymbols;
     
     [self.collectionView reloadData];
 }
@@ -346,12 +354,14 @@
         MNCalendarViewWeekdayCell *cell    = [collectionView dequeueReusableCellWithReuseIdentifier:MNCalendarViewWeekdayCellIdentifier
                                                                                     forIndexPath:indexPath];
 
-        NSInteger adjustedIndexOfDayInWeek = (indexPath.item + self.calendar.firstWeekday - 1) % self.daysInWeek;
-        cell.titleLabel.text               = self.weekdaySymbols[adjustedIndexOfDayInWeek];
-        cell.backgroundColor               = self.collectionView.backgroundColor;
-        cell.separatorColor                = self.separatorColor;
-        cell.titleLabel.textColor          = self.headerTitleColor;
-        cell.titleLabel.font               = self.weekdayFont;
+        NSInteger adjustedIndexOfDayInWeek  = (indexPath.item + self.calendar.firstWeekday - 1) % self.daysInWeek;
+        cell.titleLabel.text                = self.weekdaySymbols[adjustedIndexOfDayInWeek];
+        cell.titleLabel.accessibilityLabel  = self.accessibilityWeekdaySymbols[adjustedIndexOfDayInWeek];
+        cell.titleLabel.accessibilityTraits = UIAccessibilityTraitHeader;
+        cell.backgroundColor                = self.collectionView.backgroundColor;
+        cell.separatorColor                 = self.separatorColor;
+        cell.titleLabel.textColor           = self.headerTitleColor;
+        cell.titleLabel.font                = self.weekdayFont;
 
         return cell;
     }
@@ -386,6 +396,11 @@
          calendar:self.calendar];
     [cell setEnabled:[self dateEnabled:date]];
     
+    if (cell.isEnabled && self.delegate && [self.delegate respondsToSelector:@selector(calendarView:didSelectDate:)]) {
+        [cell.titleLabel setAccessibilityTraits:UIAccessibilityTraitButton];
+    } else {
+        [cell.titleLabel setAccessibilityTraits:UIAccessibilityTraitNone];
+    }
     
     if (self.selectedDate && cell.enabled) {
         if (self.selectedDateRange.count < 2) {
@@ -400,6 +415,10 @@
         else {
             [cell.selectedBackgroundView setBackgroundColor:_inRangeDateBackgroundColor];
             [cell setSelected:[NSDate date:date isBetweenDate:self.selectedDateRange[0] andDate:self.selectedDateRange[1]]];
+        }
+
+        if (cell.isSelected) {
+            cell.titleLabel.accessibilityTraits += UIAccessibilityTraitSelected;
         }
         
         if ([date timeIntervalSinceDate:_selectedDateRange[0]] == 0) {
@@ -424,7 +443,10 @@
                                             };
         cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:cell.titleLabel.text attributes:stringAttributes];
         cell.titleLabel.textColor      = self.todayTextColor ? self.todayTextColor : [UIColor whiteColor];
-        
+        if (self.todayString && cell.titleLabel.accessibilityLabel.length > 0) {
+            cell.titleLabel.accessibilityLabel = [NSString stringWithFormat:@"%@, %@", self.todayString, cell.titleLabel.accessibilityLabel];
+        }
+
         cell.backgroundView.backgroundColor = self.todayBackgroundColor ? self.todayBackgroundColor : [UIColor colorWithRed:0.09 green:0.06 blue:0.21 alpha:1.0];
     }
     
